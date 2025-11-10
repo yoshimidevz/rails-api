@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     token = request.headers['Authorization']&.split(' ')&.last
     decoded_token = decode_token(token)
     user_id = decoded_token['user_id']
-    user = User.find_by id: user_id
+    user = User.find_by(id: user_id)
     request.params.merge!(session_user: user)
   rescue JWT::ExpiredSignature
     render json: { error: "token expirado" }, status: 403
